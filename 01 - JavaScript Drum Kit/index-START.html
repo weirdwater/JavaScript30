@@ -59,6 +59,30 @@
 
 <script>
 
+window.addEventListener('keydown', e => {
+  const key = getKeyElement(e.keyCode)
+  const audio = getAudioElement(e.keyCode)
+  if (!key) return // Key isn't defined, abort
+
+  audio.currentTime = 0
+  audio.play()
+
+  key.classList.add('playing')
+})
+
+document.querySelector('.keys')
+  .addEventListener('transitionend', e => { 
+    e.target.classList.remove('playing')
+  })
+
+function getKeyElement(keyCode) {
+  return document.querySelector(`.key[data-key="${keyCode}"]`)
+}
+
+function getAudioElement(keyCode) {
+  return document.querySelector(`audio[data-key="${keyCode}"]`)
+}
+
 </script>
 
 
