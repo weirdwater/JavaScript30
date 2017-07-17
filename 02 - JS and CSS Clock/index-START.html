@@ -62,11 +62,58 @@
       background:black;
       position: absolute;
       top:50%;
+      transform-origin: center right;
+      transform: rotate(90deg);
+      transition: .1s ease-out;
+    }
+
+    .second-hand { 
+      transition: .1s cubic-bezier(0.1, 2.7, 0.58, 1);
     }
 
   </style>
 
   <script>
+
+  const MINUTE_MS = 60000
+  const HOUR_MS = 3600000
+
+  const generateHandSetter = (hand) => {
+    return (degrees) => {
+      const degs = Math.round(degrees) + 90
+      hand.style.transform = `rotate(${degs}deg)`
+    }
+  }
+
+  const setSecondHand = generateHandSetter(document.querySelector('.hand.second-hand'))
+  const setMinuteHand = generateHandSetter(document.querySelector('.hand.min-hand'))
+  const setHourHand = generateHandSetter(document.querySelector('.hand.hour-hand'))
+
+
+  const generateTimeToDegreesConverter = (intervalInMs) => {
+    return (timestamp) => ((timestamp % intervalInMs) * 360) / intervalInMs
+  }
+
+  const secondsToDegrees = generateTimeToDegreesConverter(MINUTE_MS)
+  const minutesToDegrees = generateTimeToDegreesConverter(HOUR_MS)
+  const hoursToDegrees = generateTimeToDegreesConverter(HOUR_MS * 12)
+
+  const getLocalNow = () => {
+    const date = new Date()
+    const offset = date.getTimezoneOffset() * -1 // Offset UTC in minutes
+    const offsetMS = offset * MINUTE_MS
+    return date.valueOf() + offsetMS
+  }
+
+  const setDate = () => {
+    const date = getLocalNow()
+    setSecondHand(secondsToDegrees(date))
+    setMinuteHand(minutesToDegrees(date))
+    setHourHand(hoursToDegrees(date))
+  }
+
+  setInterval(setDate, 1000)
+
 
 
   </script>
