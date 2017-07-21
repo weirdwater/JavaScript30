@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Type Ahead 👀</title>
+  <title>Type Ahead 👀 - START</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +16,72 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const allCities = []
+
+fetch(endpoint)
+  .then(res => res.json())
+  .then(data => allCities.push(...data))
+  .catch(err => console.error(err))
+
+document
+  .querySelector('.search')
+  .addEventListener('input', updateSuggestions)
+
+function updateSuggestions() {
+  const query = this.value
+
+  const citiesByQuery = cityOrStateContainString.bind(this, query)
+  const highlightQuery = highlightSubstring.bind(this, query)
+  const frag = document.createDocumentFragment()
+
+  allCities
+    .filter(citiesByQuery)
+    .map(renderCity)
+    .map(highlightQuery)
+    .forEach(li => frag.appendChild(li))
+
+  const list = document.querySelector('.suggestions')
+  list.innerHTML = ''
+  list.appendChild(frag)
+}
+
+function renderCity(city) {
+  const li = document.createElement('li')
+
+  const name = document.createElement('span')
+  name.classList.add('name')
+  name.innerText = `${city.city}, ${city.state}`
+
+  const population = document.createElement('span')
+  population.classList.add('population')
+  population.innerText = city.population
+
+  li.appendChild(name)
+  li.appendChild(population)
+  return li
+}
+
+function highlightSubstring(string, li) {
+  if (!string) return li
+
+  const nameSpan = li.firstChild
+  const cityState = nameSpan.innerText
+  const pattern = new RegExp(string, 'gi')
+  const highlighted = cityState
+    .replace(pattern, `<span class="hl">${string}</span>`)
+
+  nameSpan.innerHTML = highlighted
+
+  return li
+}
+
+function cityOrStateContainString(string, cityObj) {
+  const {city, state} = cityObj
+  const pattern = new RegExp(string, 'i')
+  return city.match(pattern) || state.match(pattern)
+}
 
 </script>
   </body>
 </html>
+ 
