@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Console Tricks!</title>
+  <title>Console Tricks! - START</title>
 </head>
 <body>
 
@@ -18,28 +18,70 @@
     }
 
     // Regular
+    console.log('Hi')
 
     // Interpolated
+    const emoji = '💆‍♂️'
+    console.log('Hello I am a %s string!', emoji)
 
     // Styled
+    console.log('%c I am some great text', 'font-size: 50px; color: #f00')
 
     // warning!
+    console.warn('Oh no!')
 
     // Error :|
+    console.error('Something went horribly wrong!')
 
     // Info
+    console.info('Crocodiles eat 3-4 people per year')
 
     // Testing
+    console.assert(1 === 1, 'that\'s wrong!')
+    console.assert(1 === 2, 'that\'s wrong!')
 
     // clearing
+    //console.clear()
 
     // Viewing DOM Elements
+    const p = document.querySelector('p')
+    console.log(p)
+    console.dir(p)
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(dog.name)
+      console.log(`This is ${dog.name}`)
+      console.log(`${dog.name} is ${dog.age} years old`)
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`)
+      console.groupEnd(dog.name)
+    })
 
     // counting
+    console.count('Arjo')
+    console.count('Arjo')
+    console.count('Wes')
+    console.count('Wes')
+    console.count('Wes')
+    console.count('Wes')
+    console.count('Arjo')
+    console.count('Arjo')
+    console.count('Wes')
+    console.count('Arjo')
+    console.count('Wes')
+    console.count('Arjo')
+    console.count('Arjo')
 
     // timing
+    console.time('fetching data')
+    fetch('https://api.github.com/users/weirdwater')
+      .then(data => {
+        console.timeEnd('fetching data')
+        return data
+      })
+      .then(data => data.json())
+      .then(console.log)
+      .then(console.log)
 
   </script>
 </body>
