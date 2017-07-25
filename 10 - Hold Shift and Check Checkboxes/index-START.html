@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hold Shift to Check Multiple Checkboxes</title>
+  <title>START - Hold Shift to Check Multiple Checkboxes</title>
 </head>
 <body>
   <style>
@@ -99,6 +99,38 @@
   </div>
 
 <script>
+
+const checkboxes = Array.from(document.querySelectorAll('.inbox input[type="checkbox"]'))
+let lastSelectedItem = null
+let shiftIsPressed = false
+
+function multiSelect (event) {
+  const {checked} = this
+
+  if (checked && lastSelectedItem && shiftIsPressed) {
+    let inBetween = false
+    checkboxes.forEach(checkbox => {
+      if (checkbox === this || checkbox === lastSelectedItem) {
+        inBetween = !inBetween
+      }
+
+      if (inBetween) checkbox.checked = true
+    })
+  }
+
+  lastSelectedItem = checked ? this : null
+}
+
+checkboxes.forEach(item => item.addEventListener('change', multiSelect))
+
+function setShiftState(e) {
+  shiftIsPressed = e.shiftKey
+}
+
+window.addEventListener('keydown', setShiftState)
+window.addEventListener('keyup', setShiftState)
+
+
 </script>
 </body>
 </html>
