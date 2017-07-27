@@ -2,11 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Key Detection</title>
+  <title>START - Key Detection</title>
   <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
 </head>
 <body>
+
+<h1>Lives: <span id="lives">1</span></h1>
+
 <script>
+const KEY_UP = 38, 
+	  KEY_LEFT = 37,
+	  KEY_RIGHT = 39,
+	  KEY_DOWN = 40, 
+	  KEY_A = 65, 
+	  KEY_B = 66
+
+const konamiCode = [
+	KEY_UP,
+	KEY_UP,
+	KEY_DOWN,
+	KEY_DOWN,
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_B,
+	KEY_A,
+]
+
+const lives = document.querySelector('#lives')
+let keyHistory = []
+
+window.addEventListener('keyup', event => {
+	const nextIndex = keyHistory.length
+	const pressedKey = event.keyCode
+
+	konamiCode[nextIndex] === pressedKey 
+		? keyHistory.push(pressedKey) 
+		: keyHistory = []
+
+	if (konamiCode.length === keyHistory.length) {
+		const amount = parseInt(lives.innerText)
+		
+		lives.innerText = amount + 30
+		keyHistory = []
+	}
+})
 </script>
 </body>
 </html>
