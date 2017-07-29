@@ -2,21 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
+  <title>START - JS Reference VS Copy</title>
 </head>
 <body>
 
   <script>
     // start with strings, numbers and booleans
+    console.groupCollapsed('primitives')
+    let age = 22
+    let age2 = age
+    console.log(age, age2)
+    age = 100
+    console.log(age, age2)
+
+    let name = 'Joseph'
+    let name2 = name
+    console.log(name, name2)
+    name = 'Arie'
+    console.log(name, name2)
+
+    let isStudent = true
+    let isStudent2 = isStudent
+    console.log(isStudent, isStudent2)
+    isStudent = false
+    console.log(isStudent, isStudent2)
+    console.groupEnd('primitives')
 
     // Let's say we have an array
+    console.groupCollapsed('arrays')
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+    console.log('original players', players)
 
     // and we want to make a copy of it.
 
     // You might think we can just do something like this:
+    const team = players
 
     // however what happens when we update that array?
+    players.push('Brian')
+    team.shift()
+
+    console.log('players', players)
+    console.log('team', team)
 
     // now here is the problem!
 
@@ -27,24 +54,80 @@
     // So, how do we fix this? We take a copy instead!
 
     // one way
+    const newTeam = players.slice()
 
     // or create a new array and concat the old one in
+    const concatTeam = [].concat(players)
 
     // or use the new ES6 Spread
+    const es6Team = [...players]
 
     // now when we update it, the original one isn't changed
+    players.push('Ted')
+    newTeam.pop()
+    concatTeam[2] = 'Max'
+    es6Team.push('Lex')
+
+    console.log('players', players)
+    console.log('newTeam', newTeam)
+    console.log('concatTeam', concatTeam)
+    console.log('es6Team', es6Team)
+    console.log('players', players)
+
+    console.groupEnd('arrays')
 
     // The same thing goes for objects, let's say we have a person object
-
+    console.groupCollapsed('objects')
     // with Objects
+    const person = {
+        name: 'Dan',
+        age: 28
+    }
+
+    console.log(person)
 
     // and think we make a copy:
+    const captain = person
+    captain.age = 90
+
+    console.log(person)
 
     // how do we take a copy instead?
+    const harold = Object.assign({}, person)
+    harold.name = 'harold'
+    harold.age = 42
+
+    console.table([person, captain, harold])
 
     // We will hopefully soon see the object ...spread
+    // const jordan = {...person}
+    console.groupEnd('objects')
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+    console.groupCollapsed('nested objects')
+    const wes = {
+        name: 'Wes',
+        age: 100,
+        social: {
+            twitter: '@wesbos',
+            facebook: 'wesbos.developer'
+        }
+    }
+
+    console.log(wes)
+
+    const dev = Object.assign({}, wes)
+    dev.name = 'Arjo'
+
+    console.table([wes, dev])
+
+    dev.social.twitter = '@weirdwater'
+    console.log('dev', dev.social)
+    console.log('wes', wes.social)
+
+    // Either do a "deep clone"
+    // or JSON.parse(JSON.stringify(wes))
+    console.groupEnd('nested objects')
 
   </script>
 
