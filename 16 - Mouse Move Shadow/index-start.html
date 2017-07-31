@@ -35,6 +35,36 @@
   </style>
 
 <script>
+
+const hero = document.querySelector('.hero')
+const text = hero.querySelector('h1')
+const walk = 500
+
+
+function updateShadow(mouseEvent) {
+  const { clientX, clientY } = mouseEvent
+  const { innerWidth, innerHeight } = window
+
+  const offsetX = (innerWidth / 2 - clientX) 
+  const offsetY = (innerHeight / 2 - clientY)
+
+  const walkX = Math.round(offsetX * walk / innerWidth)
+  const walkY = Math.round(offsetY * walk / innerHeight)
+
+  console.log(walkX, walkY)
+
+  text.style.textShadow = `
+    ${walkX*-1}px ${walkY*-1}px 0 rgba(255,0,255,0.7),
+    ${walkX*-1}px ${walkY}px 0 rgba(0,255,255,.7),
+    ${walkY*-1}px ${walkX}px 0 rgba(0,255,0,.7),
+    ${walkX}px ${walkY}px 0 rgba(0,0,255,.7)`
+}
+
+
+window.addEventListener('mousemove', updateShadow)
+
+
+
 </script>
 </body>
 </html>
