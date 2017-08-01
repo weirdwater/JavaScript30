@@ -45,7 +45,37 @@
 
 <script>
 const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+const bandList = document.querySelector('#bands')
 
+
+const stripArticles = (string) => string.replace(/^(a|the|an)\s/i, '').trim()
+
+const withoutArticle = (a, b) => stripArticles(a) > stripArticles(b) ? 1 : -1
+
+const toListItem = band => {
+  const li = document.createElement('li')
+  li.innerText = band
+  return li
+}
+
+const intoFragment = (frag, el) => {
+  frag.appendChild(el)
+  return frag
+}
+
+const renderSortedList = (list, strings) => {
+  list.appendChild(
+    strings
+      .sort(withoutArticle)
+      .map(toListItem)
+      .reduce(intoFragment, document.createDocumentFragment())
+  )
+}
+
+const renderBandList = renderSortedList.bind(null, bandList)
+
+
+renderBandList(bands)
 
 </script>
 
