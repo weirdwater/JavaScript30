@@ -182,6 +182,32 @@
     </li>
   </ul>
 <script>
+
+const durationFromVideo = video => video.dataset.time
+
+const toSeconds = duration => {
+  const [minutes, seconds] = duration.split(':')
+  return parseInt(seconds) + parseInt(minutes) * 60
+}
+
+const sum = (total, number) => total + number
+
+const totalSeconds = Array.from(document.querySelectorAll('.videos li'))
+  .map(durationFromVideo)
+  .map(toSeconds)
+  .reduce(sum, 0)
+
+const unitConverter = (smallUnitsPerBigUnit, smallUnits) => Math.floor(smallUnits / smallUnitsPerBigUnit)
+const secondsToHours = unitConverter.bind(null, 3600)
+const secondsToMinutes = unitConverter.bind(null, 60)
+
+console.log(
+  secondsToHours(totalSeconds),
+  secondsToMinutes(totalSeconds) % 60,
+  totalSeconds % 60
+)
+
+
 </script>
 </body>
 </html>
