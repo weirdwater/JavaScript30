@@ -57,7 +57,20 @@
     }
     /*Compass: https://thenounproject.com/search/?q=compass&i=592352*/
   </style>
-  <script>
-  </script>
+<script>
+
+const arrow = document.querySelector('.arrow')
+const speed = document.querySelector('.speed-value')
+
+navigator.geolocation.watchPosition(data => {
+  speed.textContent = data.coords.speed
+  arrow.style.transform = `rotate(${data.coords.heading})`
+}, err => {
+  console.log('For this application to work you need to grant this page geolocation data.')
+})
+
+console.log(arrow, speed)
+
+</script>
 </body>
 </html>
