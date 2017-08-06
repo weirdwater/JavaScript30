@@ -25,9 +25,38 @@
       <p>Aliquam <a href="">dicta</a> sequi culpa fugiat <a href="">consequuntur</a> pariatur optio ad minima, maxime <a href="">odio</a>, distinctio magni impedit tempore enim repellendus <a href="">repudiandae</a> quas!</p>
     </div>
 
-  <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
-  </script>
+<script>
+
+
+const triggers = document.querySelectorAll('a')
+const pill = document.createElement('div')
+pill.classList.add('highlight')
+document.querySelector('body').appendChild(pill)
+
+
+
+function positionPill () {
+  const {
+    top,
+    left,
+    height, 
+    width } = this.getBoundingClientRect()
+
+    const absoluteX = left + window.scrollX
+    const absoluteY = top + window.scrollY
+
+    pill.style.width = width + 'px'
+    pill.style.height = height + 'px'
+    pill.style.transform = `translate(${absoluteX}px, ${absoluteY}px)`
+    console.dir(this.clientTop)
+}
+
+
+
+triggers.forEach(a => a.addEventListener('mouseenter', positionPill))
+
+
+</script>
 </body>
 </html>
 
