@@ -39,7 +39,17 @@
 
 <button></button>
 <script>
+const divs = document.querySelectorAll('div')
 
+function divClick (e) {
+  console.log(this.className)
+}
+
+
+divs.forEach(div => div.addEventListener('click', divClick, {
+  capture: false,
+  once: true
+}))
 </script>
 </body>
 </html>
