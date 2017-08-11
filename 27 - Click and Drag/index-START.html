@@ -35,6 +35,38 @@
   </div>
 
 <script>
+
+const itemsContainer = document.querySelector('.items')
+const items = document.querySelectorAll('item')
+let startX;
+let scrollLeft;
+
+function handleDrag (e) {
+    e.preventDefault()
+    const x = e.pageX - itemsContainer.offsetLeft
+    const walk = x - startX
+    console.log(itemsContainer.scrollLeft - walk)
+    itemsContainer.scrollLeft = scrollLeft - walk
+}
+
+function handleMouseDown (e) {
+    this.classList.add('active')
+    startX = e.pageX - itemsContainer.offsetLeft
+    scrollLeft = itemsContainer.scrollLeft
+    itemsContainer.addEventListener('mousemove', handleDrag)
+}
+
+function handleMouseUp () {
+    this.classList.remove('active')
+    itemsContainer.removeEventListener('mousemove', handleDrag)
+}
+
+itemsContainer.addEventListener('mousedown', handleMouseDown)
+itemsContainer.addEventListener('mouseup', handleMouseUp)
+itemsContainer.addEventListener('mouseleave', handleMouseUp)
+
+
+
 </script>
 
   </body>
