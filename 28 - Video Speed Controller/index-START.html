@@ -15,6 +15,31 @@
   </div>
 
 <script>
+
+const speed = document.querySelector('.speed')
+const speedBar = speed.querySelector('.speed-bar')
+const video = document.querySelector('video')
+
+function slideSpeed(e) {
+	const y = e.pageY - this.offsetTop
+	const factor = y / speed.clientHeight
+
+	// Adjust bar height proportionately
+	const percentage = factor * 100
+	const height = `${Math.round(percentage)}%`
+	speedBar.style.height = height
+
+	// Set playbackRate
+	const playbackRate = 3.96 * factor + .04
+	video.playbackRate = playbackRate
+
+	// Display playbackRate
+	const doubleDecimals = Math.round(playbackRate * 100) / 100
+	speedBar.innerText = `${doubleDecimals}x`
+}
+
+speed.addEventListener('mousemove', slideSpeed)
+
 </script>
 </body>
 </html>
