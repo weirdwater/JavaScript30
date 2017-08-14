@@ -78,6 +78,7 @@
 
   function startGame () {
     score = 0
+    scoreBoard.textContent = score
     chancesLeft = 20
     timeUp = false
     setTimeout(() => timeUp = true, 10000)
